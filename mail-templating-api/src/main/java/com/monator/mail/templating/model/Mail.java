@@ -3,15 +3,16 @@ package com.monator.mail.templating.model;
 import java.util.*;
 
 public class Mail {
-    private Map<String, Object> templateAttributes;
     private final String templateKey;
+    private Map<String, Object> templateAttributes;
 
     private MailContact sender;
-    private MailContact recipient;
+    private Set<MailContact> recipients;
     private String subject;
 
     public Mail(String templateKey) {
         templateAttributes = new HashMap<>();
+        recipients = new HashSet<>();
 
         this.templateKey = templateKey;
     }
@@ -28,12 +29,17 @@ public class Mail {
         this.sender = sender;
     }
 
-    public MailContact getRecipient() {
-        return recipient;
+    public List<MailContact> getRecipients() {
+        return new ArrayList<>(recipients);
     }
 
     public void setRecipient(MailContact recipient) {
-        this.recipient = recipient;
+        this.recipients.add(recipient);
+    }
+
+    public void setRecipients(List<MailContact> recipients) {
+        this.recipients.clear();
+        this.recipients.addAll(recipients);
     }
 
     public String getSubject() {

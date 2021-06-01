@@ -69,13 +69,13 @@ public class MailServiceImpl implements MailService {
         }
 
         MailContact sender = mail.getSender();
-        MailContact recipient = mail.getRecipient();
+        List<MailContact> recipients = mail.getRecipients();
         String subject = mail.getSubject();
 
         Map<String, Object> data = mail.getAttributes();
         String body = mailTemplate.render(data);
 
-        internalMailSender.sendEmail(recipient, sender, subject, body);
+        internalMailSender.sendEmail(sender, recipients, subject, body);
     }
 
     @Override
