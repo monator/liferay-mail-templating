@@ -1,0 +1,22 @@
+Bundle-Name: Monator Mail API
+Bundle-SymbolicName: com.monator.mail.templating.api
+
+Export-Package:\
+  com.monator.mail.templating,\
+  com.monator.mail.templating.exception,\
+  com.monator.mail.templating.model,\
+  com.monator.mail.templating.template
+
+Import-Package:\
+  !com.sun.org.apache.xml.internal.utils,\
+  !com.sun.org.apache.xpath.internal,\
+  !com.sun.org.apache.xpath.internal.objects,\
+  !org.apache.log,\
+  !org.mozilla.javascript,\
+  !org.python.core,\
+  !org.python.util,\
+  !org.slf4j.spi,\
+  !org.zeroturnaround.javarebel,\
+  *
+
+-includeresource: META-INF/lib/org.freemarker.jar=org.freemarker-2.3.23.LIFERAY-PATCHED-4.jar;lib:=true
