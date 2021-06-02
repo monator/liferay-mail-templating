@@ -7,6 +7,35 @@
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>Liferay Mail Templating</name>
+    <description>
+        Service that makes it possible to write mail templates in freemarker.
+    </description>
+    <url>https://github.com/monator/liferay-mail-templating</url>
+
+    <licenses>
+        <license>
+            <name>LGPL 3.0</name>
+            <url>http://www.fsf.org/licensing/licenses/lgpl.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>martin.lind</id>
+            <name>Martin Lind</name>
+            <email>martin.lind@monator.com</email>
+            <organization>Monator Technologies AB</organization>
+            <organizationUrl>http://www.monator.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/monator/liferay-mail-templating.git</connection>
+        <developerConnection>scm:git:ssh://github.com:monator/liferay-mail-templating.git</developerConnection>
+        <url>http://github.com/monator/liferay-mail-templating/tree/master</url>
+    </scm>
+
     <modules>
         <module>mail-templating-api</module>
         <module>mail-templating-service</module>
@@ -58,7 +87,27 @@
         </dependencies>
     </dependencyManagement>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+        </plugins>
+        
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -85,4 +134,54 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.3.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
